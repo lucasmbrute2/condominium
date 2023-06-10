@@ -9,9 +9,9 @@ describe('Building entity', () => {
     expect(sut).toBeInstanceOf(Building)
     expect(sut).toEqual(
       expect.objectContaining({
-        id: sut.id,
-        buildingNumber: sut.buildingNumber,
-        syndicateId: sut.syndicateId,
+        id: expect.any(String),
+        buildingNumber: expect.any(Number),
+        syndicateId: expect.any(String),
       }),
     )
   })

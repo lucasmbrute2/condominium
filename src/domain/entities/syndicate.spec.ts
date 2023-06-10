@@ -9,10 +9,10 @@ describe('Syndicate entity', () => {
     expect(sut).toBeInstanceOf(Syndicate)
     expect(sut).toEqual(
       expect.objectContaining({
-        id: sut.id,
-        name: sut.name,
-        username: sut.username,
-        password: sut.password,
+        id: expect.any(String),
+        name: expect.any(String),
+        username: expect.any(String),
+        password: expect.any(String),
       }),
     )
   })
