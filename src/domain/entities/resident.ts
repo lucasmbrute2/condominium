@@ -18,12 +18,7 @@ export class Resident {
   constructor(private props: ResidentProps) {
     const id = this.props.id || props.id || randomUUID()
     this.props = {
-      addressId: props.addressId,
-      apartament: props.apartament,
-      buildingId: props.apartament,
-      cpf: props.cpf,
-      email: props.email,
-      name: props.name,
+      ...props,
       id,
     }
   }
