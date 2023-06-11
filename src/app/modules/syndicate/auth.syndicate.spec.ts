@@ -8,6 +8,7 @@ import {
 } from '@/src/tests/factories/entities/syndicate'
 import { makeHashStub, makeAuthStub } from '@/src/tests/factories/infra'
 import { AppError } from '@/src/errors/global-error'
+import { Syndicate } from '@/src/domain/entities/syndicate'
 
 let sut: AuthSyndicate
 let inMemorySyndicateRepository: InMemorySyndicateRepository
@@ -73,5 +74,19 @@ describe('Auth Syndicate Use Case', () => {
         password,
       })
     }).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('Should return token and Syndicate on success', async () => {
+    const syndicate = makeSyndicate()
+    const { username, password } = syndicate
+
+    inMemorySyndicateRepository.Syndicates.push(syndicate)
+    const response = await sut.execute({
+      username,
+      password,
+    })
+
+    expect(response.syndicate).toBeInstanceOf(Syndicate)
+    expect(response.token).toBeTruthy()
   })
 })
