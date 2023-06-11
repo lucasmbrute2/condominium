@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Invoices } from './Invoices'
-import { makeInvoices } from '@/src/tests/factories/invoices'
+import { makeInvoices } from '@/src/tests/factories/entities/invoices'
 
 describe('Invoices entity', () => {
   it('Should be able to instance an Invoices with correct values', () => {

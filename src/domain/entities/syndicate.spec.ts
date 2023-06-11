@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Syndicate } from './syndicate'
-import { makeSyndicate } from '@/src/tests/factories/syndicate'
+import { makeSyndicate } from '@/src/tests/factories/entities/syndicate'
 
 describe('Syndicate entity', () => {
   it('Should be able to instance an Syndicate with correct values', () => {

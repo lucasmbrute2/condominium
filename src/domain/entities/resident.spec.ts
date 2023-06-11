@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Resident } from './resident'
-import { makeResident } from '@/src/tests/factories/resident'
+import { makeResident } from '@/src/tests/factories/entities/resident'
 
 describe('Resident entity', () => {
   it('Should be able to instance an Resident with correct values', () => {
