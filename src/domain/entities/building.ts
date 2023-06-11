@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto'
 interface BuildingProps {
   id?: string
   buildingNumber: number
-  syndicateId: string
+  syndicateId?: string
 }
 
 export class Building {

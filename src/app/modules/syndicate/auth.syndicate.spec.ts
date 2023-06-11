@@ -1,6 +1,6 @@
 import { InMemorySyndicateRepository } from '@/src/infra/in-memory/syndicate-repository'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { AuthSyndicate } from './auth-syndicate'
+import { AuthSyndicate } from './auth-syndicate-use-case'
 import { Auth, Hasher } from '@/src/domain/protocols'
 import {
   makeSyndicate,
