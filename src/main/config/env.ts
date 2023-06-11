@@ -12,6 +12,7 @@ const envSchema = z.object({
   MAIL_USERNAME: z.string(),
   MAIL_PASSWORD: z.string(),
   ADMIN_PASSWORD: z.string(),
+  EXPIRES_IN: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
