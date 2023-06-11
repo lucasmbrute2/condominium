@@ -7,5 +7,6 @@ export const makeBuilding = (override?: Partial<Building>): Building => {
   return new Building({
     buildingNumber: 1,
     syndicateId,
+    ...override,
   })
 }
