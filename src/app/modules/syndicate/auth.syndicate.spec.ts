@@ -32,4 +32,19 @@ describe('Auth Syndicate Use Case', () => {
 
     expect(compareSpy).toBeCalledWith(password, password)
   })
+
+  it('Should call Auth Repository with correct values', async () => {
+    const encryptSpy = vi.spyOn(authStub, 'encrypt')
+
+    const syndicate = makeSyndicate()
+    const { username, password, id } = syndicate
+
+    inMemorySyndicateRepository.Syndicates.push(syndicate)
+    await sut.execute({
+      username,
+      password,
+    })
+
+    expect(encryptSpy).toHaveBeenCalledWith(id)
+  })
 })
