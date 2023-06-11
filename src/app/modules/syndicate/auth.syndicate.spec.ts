@@ -52,9 +52,26 @@ describe('Auth Syndicate Use Case', () => {
     expect(encryptSpy).toHaveBeenCalledWith(id)
   })
 
-  it('Shoul throw Error if Syndicates it not found', () => {
+  it('Should throw Error if Syndicates it not found', () => {
     expect(async () => {
       await sut.execute(makeSyndicateProps())
+    }).rejects.toBeInstanceOf(AppError)
+  })
+
+  it('Should throw if compare password fails', () => {
+    expect(async () => {
+      vi.spyOn(hasherStub, 'compare').mockReturnValueOnce(
+        Promise.resolve(false),
+      )
+
+      const syndicate = makeSyndicate()
+      const { username, password } = syndicate
+
+      inMemorySyndicateRepository.Syndicates.push(syndicate)
+      await sut.execute({
+        username,
+        password,
+      })
     }).rejects.toBeInstanceOf(AppError)
   })
 })
