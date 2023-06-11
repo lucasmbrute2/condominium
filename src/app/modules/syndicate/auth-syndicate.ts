@@ -34,5 +34,10 @@ export class AuthSyndicate {
     if (!isPasswordCorrect) throw new AppError('Invalid credentials', 409)
 
     const token = await this.auth.encrypt(syndicate.id)
+
+    return {
+      token,
+      syndicate,
+    }
   }
 }
