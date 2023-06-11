@@ -5,7 +5,7 @@ import { Auth, Hasher } from '@/src/domain/protocols'
 import {
   makeSyndicate,
   makeSyndicateProps,
-} from '@/src/tests/factories/entities/syndicate'
+} from '@/src/tests/factories/entities'
 import { makeHashStub, makeAuthStub } from '@/src/tests/factories/infra'
 import { AppError } from '@/src/errors/global-error'
 import { Syndicate } from '@/src/domain/entities/syndicate'
