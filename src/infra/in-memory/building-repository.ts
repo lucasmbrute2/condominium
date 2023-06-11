@@ -16,4 +16,8 @@ export class InMemoryBuildingRepository implements BuildingRepository {
     if (!building) return null
     return building
   }
+
+  async fetch(): Promise<Building[]> {
+    return this.Buildings
+  }
 }
