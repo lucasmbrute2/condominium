@@ -2,8 +2,12 @@ import { InMemorySyndicateRepository } from '@/src/infra/in-memory/syndicate-rep
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthSyndicate } from './auth-syndicate'
 import { Auth, Hasher } from '@/src/domain/protocols'
-import { makeSyndicate } from '@/src/tests/factories/entities/syndicate'
+import {
+  makeSyndicate,
+  makeSyndicateProps,
+} from '@/src/tests/factories/entities/syndicate'
 import { makeHashStub, makeAuthStub } from '@/src/tests/factories/infra'
+import { AppError } from '@/src/errors/global-error'
 
 let sut: AuthSyndicate
 let inMemorySyndicateRepository: InMemorySyndicateRepository
@@ -46,5 +50,11 @@ describe('Auth Syndicate Use Case', () => {
     })
 
     expect(encryptSpy).toHaveBeenCalledWith(id)
+  })
+
+  it('Shoul throw Error if Syndicates it not found', () => {
+    expect(async () => {
+      await sut.execute(makeSyndicateProps())
+    }).rejects.toBeInstanceOf(AppError)
   })
 })
