@@ -7,9 +7,23 @@ export const makeResident = (override?: Partial<Resident>) => {
     name: 'any-name',
     email: 'any-email',
     cpf: 'any-cpf',
-    addressId: 'any-id',
-    apartament: '101',
+    address: {
+      city: 'any-city',
+      country: 'any-country',
+      locality: 'any-locality',
+      number: 'any-number',
+      postal_code: 'any-postal-code',
+      region_code: 'any-region-code',
+      street: 'any-street',
+    },
+    apartament: 101,
     buildingId: 'any-id',
+    phone: {
+      area: 1,
+      countryCode: 1,
+      number: 1,
+      type: 'BUSINESS',
+    },
     ...override,
   })
 }

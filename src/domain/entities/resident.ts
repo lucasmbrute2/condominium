@@ -1,17 +1,20 @@
+import { Address, Phone } from '@/src/@types'
 import { randomUUID } from 'node:crypto'
 
 interface ResidentProps {
   id?: string
   name: string
   email: string
-  apartament: string
+  apartament: number
   cpf: string
   nonPayments?: number
   joinAt?: Date
   leftAt?: Date
 
   buildingId: string
-  addressId: string
+
+  address: Address
+  phone: Phone
 }
 
 export class Resident {
@@ -47,11 +50,11 @@ export class Resident {
     return this.props.email
   }
 
-  set apartament(apartament: string) {
+  set apartament(apartament: number) {
     this.props.apartament = apartament
   }
 
-  get apartament(): string {
+  get apartament(): number {
     return this.props.apartament
   }
 
@@ -87,11 +90,19 @@ export class Resident {
     return this.props.buildingId
   }
 
-  set addressId(addressId: string) {
-    this.props.addressId = addressId
+  set address(address: Address) {
+    this.props.address = address
   }
 
-  get addressId(): string {
-    return this.props.addressId
+  get address(): Address {
+    return this.props.address
+  }
+
+  set phone(phone: Phone) {
+    this.props.phone = phone
+  }
+
+  get phone(): Phone {
+    return this.props.phone
   }
 }
