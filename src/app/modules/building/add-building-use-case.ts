@@ -15,11 +15,11 @@ export class AddBuilding {
   async execute({
     buildingNumber,
   }: AddBuildingProps): Promise<AddBuildingResponse> {
-    const alreadyExistsThisBuilding =
-      await this.buildingRepository.findByNumber(buildingNumber)
+    const hasBuilding = await this.buildingRepository.findBy({
+      buildingNumber,
+    })
 
-    if (alreadyExistsThisBuilding)
-      throw new AppError('Building already exists', 409)
+    if (hasBuilding) throw new AppError('Building already exists', 409)
 
     const building = new Building({
       buildingNumber,

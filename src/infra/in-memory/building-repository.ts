@@ -8,13 +8,15 @@ export class InMemoryBuildingRepository implements BuildingRepository {
     this.Buildings.push(building)
   }
 
-  async findByNumber(buildingNumber: number): Promise<Building> {
-    const building = this.Buildings.find(
-      (building) => building.buildingNumber === buildingNumber,
-    )
+  async findBy(query: Partial<Building>): Promise<Building> {
+    const queryKeys = Object.keys(query)
 
-    if (!building) return null
-    return building
+    for (let i = 0; i < queryKeys.length; i++) {
+      const building = this.Buildings.find((building) => building[queryKeys[i]])
+      if (building) return building
+    }
+
+    return null
   }
 
   async fetch(): Promise<Building[]> {
