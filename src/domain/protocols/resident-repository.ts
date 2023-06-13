@@ -8,4 +8,5 @@ export interface FindBy {
 export interface ResidentRepository {
   add(resident: Resident): Promise<void>
   findBy({ cpf, email }: FindBy): Promise<Resident | null>
+  fetch(): Promise<Resident[]>
 }

@@ -11,7 +11,7 @@ let sut: AddResident
 let inMemoryResidentRepository: InMemoryResidentRepository
 let inMemoryBuildingRepository: InMemoryBuildingRepository
 
-describe('Auth Syndicate Use Case', () => {
+describe('Add Resident Use Case', () => {
   beforeEach(() => {
     inMemoryResidentRepository = new InMemoryResidentRepository()
     inMemoryBuildingRepository = new InMemoryBuildingRepository()

@@ -16,4 +16,8 @@ export class InMemoryResidentRepository implements ResidentRepository {
     if (!resident) return null
     return resident
   }
+
+  async fetch(): Promise<Resident[]> {
+    return this.Resident
+  }
 }
