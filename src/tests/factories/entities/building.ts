@@ -5,7 +5,7 @@ export const makeBuilding = (override?: Partial<Building>): Building => {
   const { id: syndicateId } = makeSyndicate()
 
   return new Building({
-    buildingNumber: 1,
+    buildingNumber: Math.floor(Math.random() * 1000),
     syndicateId,
     ...override,
   })

@@ -4,8 +4,9 @@ import { BuildingRepository } from '@/src/domain/protocols'
 export class InMemoryBuildingRepository implements BuildingRepository {
   public readonly Buildings: Building[] = []
 
-  async add(building: Building): Promise<void> {
+  async add(building: Building): Promise<Building | null> {
     this.Buildings.push(building)
+    return building
   }
 
   async findBy(query: Partial<Building>): Promise<Building> {
