@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id          String  @id @default(uuid())
+  street      String
+  number      String
+  complement  String?
+  locality    String // Bairro
+  city        String
+  region      String // Estado
+  region_code String // Código do Estado
+  country     String  @default("BRA")
+  postalCode  String
+
+  Resident Resident?
+}
+
+model Phone {
+  id          String    @id @default(uuid())
+  countryCode Int       @default(55)
+  area        Int
+  number      Int
+  type        PhoneType @default(MOBILE)
+
+  Resident   Resident? @relation(fields: [residentId], references: [id])
+  residentId String?
+}
+
+model Syndicate {
+  id       String @id @default(uuid())
+  name     String
+  username String @unique
+  password String
+}
+
+model Resident {
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+
+  apartament  Int
+  cpf         String    @unique
+  nonPayments Int?      @default(0)
+  joinAt      DateTime  @default(now())
+  leftAt      DateTime?
+
+  building   Building @relation(fields: [buildingId], references: [id])
+  buildingId String
+
+  Invoices Invoices[]
+
+  address   Address @relation(fields: [addressId], references: [id])
+  addressId String  @unique
+  Phone     Phone[]
+}
+
+model Building {
+  id             String @id @default(uuid())
+  buildingNumber Int    @unique
+
+  Resident Resident[]
+}
+
+model Invoices {
+  id     String  @id @default(uuid())
+  month  Int
+  amount Int
+  isPaid Boolean @default(false)
+
+  resident   Resident @relation(fields: [residentId], references: [id])
+  residentId String
+}
+
+enum PhoneType {
+  MOBILE
+  BUSINESS
+  HOME
+}
