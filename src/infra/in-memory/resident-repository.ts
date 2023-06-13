@@ -1,5 +1,5 @@
 import { Resident } from '@/src/domain/entities/resident'
-import { FindBy, ResidentRepository } from '@/src/domain/protocols'
+import { ResidentRepository } from '@/src/domain/protocols'
 
 export class InMemoryResidentRepository implements ResidentRepository {
   public readonly Resident: Resident[] = []
@@ -8,16 +8,26 @@ export class InMemoryResidentRepository implements ResidentRepository {
     this.Resident.push(resident)
   }
 
-  async findBy({ cpf, email }: FindBy): Promise<Resident | null> {
-    const resident = this.Resident.find(
-      (resident) => resident.cpf === cpf || resident.email === email,
-    )
+  async findBy(query: Partial<Resident>): Promise<Resident | null> {
+    const queryKeys = Object.keys(query)
 
-    if (!resident) return null
-    return resident
+    for (let i = 0; i < queryKeys.length; i++) {
+      const building = this.Resident.find((building) => building[queryKeys[i]])
+      if (building) return building
+    }
+
+    return null
   }
 
   async fetch(): Promise<Resident[]> {
     return this.Resident
+  }
+
+  async save(data: Resident): Promise<void> {
+    const residentIndex = this.Resident.findIndex(
+      (resident) => resident === data,
+    )
+
+    this.Resident[residentIndex] = data
   }
 }
