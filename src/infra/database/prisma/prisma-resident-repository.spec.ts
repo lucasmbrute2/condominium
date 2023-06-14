@@ -5,6 +5,7 @@ import { makeBuilding, makeResident } from '@/src/tests/factories/entities'
 import { prisma as client } from './lib/prisma'
 import { PrismaResidentRepository } from './prisma-resident-repository'
 import { PrismaBuildingRepository } from './prisma-building-repository'
+import { Resident } from '@/src/domain/entities/resident'
 
 // TO DO REFACTOR TO RESIDENT
 
@@ -57,16 +58,23 @@ describe('Resident Repository', () => {
     expect(resident).toHaveProperty('id')
   })
 
-  // // findBy()
-  // it('Shoud be able to find a Resident on success', async () => {
-  //   const sut = makeSut()
-  //   const resident = makeResident()
-  //   await sut.add(resident)
+  // findBy()
+  it('Shoud be able to find a Resident on success', async () => {
+    const sut = makeSut()
+    const resident = makeResident()
 
-  //   const residentFound = await sut.findBy({})
+    await prismaBuildingRepository.add(
+      makeBuilding({
+        id: resident.buildingId,
+      }),
+    )
+    await sut.add(resident)
+    const residentFound = await sut.findBy({
+      cpf: resident.cpf,
+    })
 
-  //   expect(residentFound).toBeInstanceOf(Resident)
-  // })
+    expect(residentFound).toBeInstanceOf(Resident)
+  })
 
   // // fetch()
   // it('Should return an array of Residents on success', async () => {
