@@ -23,6 +23,7 @@ export class PrismaBuildingRepository implements BuildingRepository {
   }
 
   async fetch(): Promise<Building[]> {
-    throw new Error('Method not implemented.')
+    const buildings = await prisma.building.findMany({})
+    return buildings.map(PrismaBuildingMapper.toDomain)
   }
 }
