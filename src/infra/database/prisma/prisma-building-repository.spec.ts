@@ -1,18 +1,18 @@
 import { BuildingRepository } from '@/src/domain/protocols'
-import { PrismaClient } from '@prisma/client'
 import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { PrismaBuildingRepository } from './prisma-building-repository'
 import { makeBuilding } from '@/src/tests/factories/entities'
 import { Building } from '@/src/domain/entities/building'
+import { prisma as client } from './lib/prisma'
 
 const makeSut = (): BuildingRepository => {
   return new PrismaBuildingRepository()
 }
 
 describe('Building Repository', () => {
-  const prisma = new PrismaClient()
+  const prisma = client
   let schema: string
 
   beforeAll(() => {
@@ -32,7 +32,7 @@ describe('Building Repository', () => {
     await prisma.$disconnect()
   })
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await prisma.building.deleteMany({})
   })
 
@@ -58,5 +58,14 @@ describe('Building Repository', () => {
   })
 
   // fetch()
-  it('', () => {})
+  it('Should return an array of Buildings on success', async () => {
+    const sut = makeSut()
+    const building = makeBuilding()
+    await sut.add(building)
+
+    const buildings = await sut.fetch()
+    expect(buildings).toHaveLength(1)
+    expect(buildings[0]).toBeInstanceOf(Building)
+    // reset DB before
+  })
 })
