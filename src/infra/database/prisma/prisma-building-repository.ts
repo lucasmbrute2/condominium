@@ -1,5 +1,5 @@
 import { Building } from '@/src/domain/entities/building'
-import { BuildingRepository } from '@/src/domain/protocols'
+import { BuildingRepository, XORBuldingNumberId } from '@/src/domain/protocols'
 import { prisma } from './lib/prisma'
 import { PrismaBuildingMapper } from './mappers/building-mapper'
 
@@ -13,8 +13,13 @@ export class PrismaBuildingRepository implements BuildingRepository {
     return PrismaBuildingMapper.toDomain(building)
   }
 
-  async findBy(query: Partial<Building>): Promise<Building> {
-    throw new Error('Method not implemented.')
+  async findBy(query: XORBuldingNumberId): Promise<Building> {
+    const building = await prisma.building.findUnique({
+      where: query,
+    })
+
+    if (!building) return null
+    return PrismaBuildingMapper.toDomain(building)
   }
 
   async fetch(): Promise<Building[]> {

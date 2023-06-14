@@ -5,6 +5,7 @@ import { randomUUID } from 'node:crypto'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { PrismaBuildingRepository } from './prisma-building-repository'
 import { makeBuilding } from '@/src/tests/factories/entities'
+import { Building } from '@/src/domain/entities/building'
 
 const makeSut = (): BuildingRepository => {
   return new PrismaBuildingRepository()
@@ -44,7 +45,17 @@ describe('Building Repository', () => {
   })
 
   // findBy()
-  it('', () => {})
+  it('Shoud be able to find a Bulding on success', async () => {
+    const sut = makeSut()
+    const building = makeBuilding()
+    await sut.add(building)
+
+    const buildingFound = await sut.findBy({
+      buildingNumber: building.buildingNumber,
+    })
+
+    expect(buildingFound).toBeInstanceOf(Building)
+  })
 
   // fetch()
   it('', () => {})

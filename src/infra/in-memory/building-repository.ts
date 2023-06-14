@@ -1,5 +1,5 @@
 import { Building } from '@/src/domain/entities/building'
-import { BuildingRepository } from '@/src/domain/protocols'
+import { BuildingRepository, XORBuldingNumberId } from '@/src/domain/protocols'
 
 export class InMemoryBuildingRepository implements BuildingRepository {
   public readonly Buildings: Building[] = []
@@ -9,7 +9,7 @@ export class InMemoryBuildingRepository implements BuildingRepository {
     return building
   }
 
-  async findBy(query: Partial<Building>): Promise<Building> {
+  async findBy(query: XORBuldingNumberId): Promise<Building> {
     const queryKeys = Object.keys(query)
 
     for (let i = 0; i < queryKeys.length; i++) {
