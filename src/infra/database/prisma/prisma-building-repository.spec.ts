@@ -66,6 +66,5 @@ describe('Building Repository', () => {
     const buildings = await sut.fetch()
     expect(buildings).toHaveLength(1)
     expect(buildings[0]).toBeInstanceOf(Building)
-    // reset DB before
   })
 })

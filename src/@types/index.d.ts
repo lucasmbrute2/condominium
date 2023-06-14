@@ -1,4 +1,5 @@
 export declare interface Phone {
+  id?: string
   countryCode: number
   area: number
   number: number
@@ -6,6 +7,7 @@ export declare interface Phone {
 }
 
 export declare interface Address {
+  id?: string
   street: string
   number: string
   complement?: string

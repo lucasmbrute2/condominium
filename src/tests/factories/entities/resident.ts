@@ -13,6 +13,7 @@ export const makeResident = (override?: Partial<Resident>) => {
       locality: 'any-locality',
       number: 'any-number',
       postal_code: 'any-postal-code',
+      region: 'any-region',
       region_code: 'any-region-code',
       street: 'any-street',
     },
