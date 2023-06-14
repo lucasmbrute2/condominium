@@ -1,4 +1,4 @@
-import { Resident } from '@/src/domain/entities/resident'
+import { Resident, ResidentProps } from '@/src/domain/entities/resident'
 import { Address, Phone, Resident as RawResident } from '@prisma/client'
 import { randomUUID } from 'crypto'
 
@@ -19,8 +19,8 @@ interface ResidentRelationsForPrisma {
 }
 
 interface ResidentRelations {
-  address: Address
-  Phone: Phone[]
+  address?: Address
+  Phone?: Phone[]
 }
 
 type ResidentWithoutAddressId = Omit<RawResident, 'addressId'>
@@ -119,9 +119,7 @@ export class PrismaResidentMapper {
       nonPayments,
     } = rawResident
 
-    const { area, countryCode, number: phoneNumber, type } = Phone[0]
-
-    return new Resident({
+    const residentProps: ResidentProps = {
       buildingId,
       apartament,
       cpf,
@@ -131,17 +129,26 @@ export class PrismaResidentMapper {
       leftAt,
       nonPayments,
       id,
-      address: {
+    }
+
+    if (rawResident.address) {
+      residentProps.address = {
         ...address,
         postal_code: address.postalCode,
-      },
-      phone: {
+      }
+    }
+
+    if (rawResident?.Phone?.length) {
+      const { area, countryCode, number: phoneNumber, type } = Phone[0]
+      residentProps.phone = {
         area,
         countryCode,
         number: phoneNumber,
         type,
         id: randomUUID(),
-      },
-    })
+      }
+    }
+
+    return new Resident(residentProps)
   }
 }

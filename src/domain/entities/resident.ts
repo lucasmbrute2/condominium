@@ -1,7 +1,7 @@
 import { Address, Phone } from '@/src/@types'
 import { randomUUID } from 'node:crypto'
 
-interface ResidentProps {
+export interface ResidentProps {
   id?: string
   name: string
   email: string
@@ -13,8 +13,8 @@ interface ResidentProps {
 
   buildingId: string
 
-  address: Address
-  phone: Phone
+  address?: Address
+  phone?: Phone
 }
 
 export class Resident {

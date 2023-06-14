@@ -4,8 +4,9 @@ import { ResidentRepository } from '@/src/domain/protocols'
 export class InMemoryResidentRepository implements ResidentRepository {
   public readonly Resident: Resident[] = []
 
-  async add(resident: Resident): Promise<void> {
+  async add(resident: Resident): Promise<Resident> {
     this.Resident.push(resident)
+    return resident
   }
 
   async findBy(query: Partial<Resident>): Promise<Resident | null> {

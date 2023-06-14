@@ -1,4 +1,4 @@
-import { ResidentRepository } from '@/src/domain/protocols'
+import { QueryResidentKeys, ResidentRepository } from '@/src/domain/protocols'
 import { prisma } from './lib/prisma'
 import { Resident } from '@/src/domain/entities/resident'
 import { PrismaResidentMapper } from './mappers/resident-mapper'
@@ -16,8 +16,11 @@ export class PrismaResidentRepository implements ResidentRepository {
     return PrismaResidentMapper.toDomain(resident)
   }
 
-  async findBy(query: Partial<Resident>): Promise<Resident> {
-    throw new Error('Method not implemented.')
+  async findBy(query: QueryResidentKeys): Promise<Resident> {
+    const resident = await prisma.resident.findUnique({
+      where: query,
+    })
+    return PrismaResidentMapper.toDomain(resident)
   }
 
   async fetch(): Promise<Resident[]> {
