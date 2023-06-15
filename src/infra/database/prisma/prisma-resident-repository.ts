@@ -29,6 +29,11 @@ export class PrismaResidentRepository implements ResidentRepository {
   }
 
   async save(data: Resident): Promise<void> {
-    throw new Error('Method not implemented.')
+    await prisma.resident.update({
+      data: PrismaResidentMapper.toPrisma(data),
+      where: {
+        id: data.id,
+      },
+    })
   }
 }
