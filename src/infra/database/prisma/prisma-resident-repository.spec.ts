@@ -95,4 +95,23 @@ describe('Resident Repository', () => {
   })
 
   // save()
+  it('Should save an Resident on success', async () => {
+    const sut = makeSut()
+    const resident = makeResident()
+
+    await prismaBuildingRepository.add(
+      makeBuilding({
+        id: resident.buildingId,
+      }),
+    )
+    await sut.add(resident)
+    resident.left()
+
+    await sut.save(resident)
+    const foundResident = await sut.findBy({
+      id: resident.id,
+    })
+
+    expect(foundResident.leftAt).toBeTruthy()
+  })
 })
