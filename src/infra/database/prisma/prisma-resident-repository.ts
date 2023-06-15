@@ -24,12 +24,11 @@ export class PrismaResidentRepository implements ResidentRepository {
   }
 
   async fetch(): Promise<Resident[]> {
-    throw new Error('Method not implemented.')
+    const residents = await prisma.resident.findMany()
+    return residents.map(PrismaResidentMapper.toDomain)
   }
 
   async save(data: Resident): Promise<void> {
     throw new Error('Method not implemented.')
   }
 }
-
-// TO DO REFACTOR TO RESIDENT
