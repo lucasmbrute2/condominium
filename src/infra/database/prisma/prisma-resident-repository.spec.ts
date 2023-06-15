@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { makeBuilding, makeResident } from '@/src/tests/factories/entities'
 import { prisma as client } from './lib/prisma'
 import { PrismaResidentRepository } from './prisma-resident-repository'
@@ -35,9 +35,11 @@ describe('Resident Repository', () => {
   afterAll(async () => {
     await prisma.$queryRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
     await prisma.$disconnect()
+    await prisma.resident.deleteMany({})
+    await prisma.building.deleteMany({})
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await prisma.resident.deleteMany({})
     await prisma.building.deleteMany({})
   })
@@ -76,16 +78,21 @@ describe('Resident Repository', () => {
     expect(residentFound).toBeInstanceOf(Resident)
   })
 
-  // // fetch()
-  // it('Should return an array of Residents on success', async () => {
-  //   const sut = makeSut()
-  //   const resident = makeResident()
-  //   await sut.add(resident)
+  // fetch()
+  it('Should return an array of Residents on success', async () => {
+    const sut = makeSut()
+    const resident = makeResident()
+    await prismaBuildingRepository.add(
+      makeBuilding({
+        id: resident.buildingId,
+      }),
+    )
+    await sut.add(resident)
 
-  //   const residents = await sut.fetch()
-  //   expect(residents).toHaveLength(1)
-  //   expect(residents[0]).toBeInstanceOf(resident)
-  // })
+    const residents = await sut.fetch()
+    expect(residents).toHaveLength(1)
+    expect(residents[0]).toBeInstanceOf(Resident)
+  })
 
   // save()
 })
